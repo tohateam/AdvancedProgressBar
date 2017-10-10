@@ -1,7 +1,7 @@
 # ColoredProgressBar
 Компонент для проектов C#
 
-![Иллюстрация к проекту](https://github.com/tohateam/ColoredProgressBar/blob/master/Screenshot/ColoredProgressBar.jpg)
+![Иллюстрация к проекту](https://github.com/tohateam/AdvancedProgressBar/blob/master/Screenshot/ColoredProgressBar.jpg)
 
 Нашел в просторах интернета прогресс бар с возможностью смены цвета полосы и немного доработал.
 
@@ -16,4 +16,4 @@
 1. Минимальное
 2. Максимальное.
 
-![Иллюстрация к проекту](https://github.com/tohateam/ColoredProgressBar/blob/master/Screenshot/ColoredProgressBar_VS.jpg)
+![Иллюстрация к проекту](https://github.com/tohateam/AdvancedProgressBar/blob/master/Screenshot/ColoredProgressBar_VS.jpg)
