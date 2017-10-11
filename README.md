@@ -16,9 +16,11 @@
 1. ValueLow - Минимальное
 2. ValueGood - Максимальное.
 
+![Иллюстрация к проекту](https://github.com/tohateam/AdvancedProgressBar/blob/master/Screenshot/ColoredProgressBar_VS.jpg)
+
 Отображение прогресса
 1. ShowLabel - отображать числовое значение прогресса
 2. LabelChar - символ рядом с цифрами, по умолчанию %
 3. LabelColor - цвет цифр
 
-![Иллюстрация к проекту](https://github.com/tohateam/AdvancedProgressBar/blob/master/Screenshot/ColoredProgressBar_VS.jpg)
+![Иллюстрация к проекту](https://github.com/tohateam/AdvancedProgressBar/blob/master/Screenshot/ColoredProgressBar_label.jpg)
