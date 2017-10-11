@@ -48,9 +48,26 @@ namespace ProgressBarLibrary {
             Solid,
             Dashed
         }
+        //Label
+        private bool _LabelProgress = true;
+        private Color _LabelProgressColor = Color.FromArgb(0, 0, 0);
+        private string _LabelChar = "%";
+
         #endregion
 
         #region Colors ****************************************************************************
+
+        [Description("The border color of progress bar")]
+        [Category("ColorProgressBar")]
+        public Color BorderColor {
+            get {
+                return _BorderColor;
+            }
+            set {
+                _BorderColor = value;
+                this.Invalidate();
+            }
+        }
 
         [Description("Main color bar progress bar")]
         [Category("ColorProgressBar")]
@@ -99,6 +116,20 @@ namespace ProgressBarLibrary {
                 this.Invalidate();
             }
         }
+
+        [Description("Band color when the upper value is reached")]
+        [Category("ColorProgressBar")]
+        public Color LabelColor {
+            get {
+                label1.ForeColor = _LabelProgressColor;
+                return _LabelProgressColor;
+            }
+            set {
+                _LabelProgressColor = value;
+                this.Invalidate();
+            }
+        }
+
         #endregion
 
         #region Values ****************************************************************************
@@ -249,14 +280,33 @@ namespace ProgressBarLibrary {
             }
         }
 
-        [Description("The border color of progress bar")]
+        [Description("The amount to jump the current value of the control by when the Step() method is called.")]
         [Category("ColorProgressBar")]
-        public Color BorderColor {
+        public bool ShowLabel {
             get {
-                return _BorderColor;
+                return _LabelProgress;
             }
             set {
-                _BorderColor = value;
+                label1.Visible = value;
+                _LabelProgress = value;
+                this.Invalidate();
+            }
+        }
+
+        [Description("The symbol displayed next to the number(no more than 3 characters")]
+        [Category("ColorProgressBar")]
+        public string LabelChar {
+            get {
+                return _LabelChar;
+            }
+            set {
+                if (value.Length > 3) {
+                    throw new ArgumentException("'" + value + "' is not a valid value for 'LabelChar'.\n" +
+                        "The value must be no longer than 3 characters.");
+                }
+
+                _LabelChar = value;
+                label1.Text = "" + _Value + " " + _LabelChar;
                 this.Invalidate();
             }
         }
@@ -268,19 +318,22 @@ namespace ProgressBarLibrary {
             //
             // Calculate matching colors
             //
-            Color darkColor = ControlPaint.Dark(_BarColor);
+            Color darkColor; // = ControlPaint.Dark(_BarColor);
+            Color lightColor; // = ControlPaint.Dark(_BarColor);
             Color bgColor = ControlPaint.Light(BackColor);
-            Color lightColor = ControlPaint.Dark(_BarColor);
 
-            if (_Value <= _ValueLow) {
+            if (_Value <= _ValueLow && _ValueLow != 0) {
                 darkColor = ControlPaint.Dark(_BarColorLow);
                 lightColor = ControlPaint.Dark(_BarColorLow);
-            } else if (_Value > _ValueLow && _Value < _ValueGood) {
+            } else if ((_Value > _ValueLow && _ValueLow !=0) && (_Value < _ValueGood && _ValueGood !=0)) {
                 darkColor = ControlPaint.Dark(_BarColorAverage);
                 lightColor = ControlPaint.Dark(_BarColorAverage);
-            } else {
+            } else if (_Value >= _ValueGood && _ValueGood != 0) {
                 darkColor = ControlPaint.Dark(_BarColorGood);
                 lightColor = ControlPaint.Dark(_BarColorGood);
+            } else {
+                darkColor = ControlPaint.Dark(_BarColor);
+                lightColor = ControlPaint.Dark(_BarColor);
             }
             //
             // Fill background
@@ -368,6 +421,10 @@ namespace ProgressBarLibrary {
             // Draw border and exit
             //
             DrawBorder(e.Graphics);
+
+            if(_LabelProgress) {
+                label1.Text = "" + _Value + " "+_LabelChar;
+            }
         }
 
         //
