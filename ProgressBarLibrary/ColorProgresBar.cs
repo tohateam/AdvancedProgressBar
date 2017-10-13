@@ -52,6 +52,7 @@ namespace ProgressBarLibrary {
         private bool _LabelProgress = true;
         private Color _LabelProgressColor = Color.FromArgb(0, 0, 0);
         private string _LabelChar = "%";
+        private string _LabelValue = null;
 
         #endregion
 
@@ -306,7 +307,21 @@ namespace ProgressBarLibrary {
                 }
 
                 _LabelChar = value;
-                label1.Text = "" + _Value + " " + _LabelChar;
+                //label1.Text = "" + _Value + " " + _LabelChar;
+                this.Invalidate();
+            }
+        }
+
+        [Description("The symbol displayed next to the number(no more than 3 characters")]
+        [Category("ColorProgressBar")]
+        public string LabelValue {
+            get {
+                //return _LabelValue ?? "" + _Value;
+                return _LabelValue ?? null;
+            }
+            set {
+                _LabelValue = value;
+                //label1.Text = "" + _Value + " " + _LabelChar;
                 this.Invalidate();
             }
         }
@@ -421,9 +436,9 @@ namespace ProgressBarLibrary {
             // Draw border and exit
             //
             DrawBorder(e.Graphics);
-
-            if(_LabelProgress) {
-                label1.Text = "" + _Value + " "+_LabelChar;
+            var currentValue = _LabelValue ?? "" + _Value;
+            if (_LabelProgress) {
+                label1.Text = "" + currentValue + " "+_LabelChar;
             }
         }
 
